@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+
+{% endblock %}
+<link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+
+
+{% block content %}
+<div class="chat-container">
+  <div class="card flex-grow-1">
+    <nav class="card-header bg-primary text-white">
+      <div class="d-flex align-items-center justify-content-between">
+          <h1>Mock ChatGpt Bot | welcome {{ user.username }} </h1>
+          {% if user.is_authenticated %}
+            <div class="mx-3">
+              <a class="text-white" href="logout">logout</a>
+            </div>
+          {% else %}
+            <div class="d-flex">
+              <div class="mx-3">
+                <a class="text-white" href="login">login</a>
+              </div>
+              <div class="mx-3">
+                <a class="text-white" href="register">register</a>
+              </div>
+            </div>
+          {% endif %}
+      </div>
+    </nav>
+    <div class="card-body messages-box">
+      <ul class="list-unstyled messages-list">
+        {% comment %} <li class="message received">
+          <div class="message-text">
+            <div class="message-sender">
+              <b>AI Chatbot</b>
+            </div>
+            <div class="message-content">
+              Hi {{ user.username }}, I am your AI Chatbot, you can ask me anything.
+            </div>
+          </div>
+        </li> {% endcomment %}
+        {% for chat in chats %}
+          {% if chat.user == request.user %}
+            <li class="message sent">
+              <div class="message-text">
+                <div class="message-sender">
+                  <b>You</b>
+                </div>
+                <div class="message-content">
+                  {{ chat.message }}
+                </div>
+              </div>
+            </li>
+            <li class="message received">
+              <div class="message-text">
+                <div class="message-sender">
+                  <b>AI Chatbot</b>
+                </div>
+                <div class="message-content">
+                  {{ chat.response }}
+                </div>
+              </div>
+            </li>
+          {% endif %}
+        {% endfor %}
+        
+      </ul>
+    </div>
+    <br><br>
+    <br><br>
+    <br><br>
+  </div>
+  <form class="message-form">
+    {% csrf_token %}
+    <div class="input-group">
+      <input type="text" class="form-control message-input" placeholder="Type your message...">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-primary btn-send">Send</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}
