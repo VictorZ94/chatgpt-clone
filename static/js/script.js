@@ -11,14 +11,16 @@ messageForm.addEventListener('submit', event => {
   }
 
   const messageItem = document.createElement('li');
-  messageItem.classList.add('message', 'sent');
+  messageItem.classList.add('mb-3');
   messageItem.innerHTML = `
-    <div class="message-text">
-      <div class="message-sender">
-        <b>You</b>
-      </div>
-      <div class="message-content">
-        ${message}
+    <div class="d-flex justify-content-end">
+      <div class="d-inline-block">
+        <div class="p-3 sent rounded">
+          <b>You</b>
+          <div class="message-content">
+            ${message}
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -38,14 +40,14 @@ messageForm.addEventListener('submit', event => {
   .then(data => {
     const response = data.response;
     const messageItem = document.createElement('li');
-    messageItem.classList.add('message', 'received');
+    messageItem.classList.add('mb-3');
     messageItem.innerHTML = `
-      <div class="message-text">
-        <div class="message-sender">
+      <div class="d-inline-block">
+        <div class="p-3 received rounded">
           <b>AI Chatbot</b>
-        </div>
-        <div class="message-content">
+          <div class="message-content">
             ${response}
+          </div>
         </div>
       </div>
     `
