@@ -8,7 +8,7 @@
 
 
 {% block content %}
-<div class="chat-container">
+<div class="chat-container container">
   <div class="card flex-grow-1">
     <nav class="card-header bg-primary text-white">
       <div class="d-flex align-items-center justify-content-between">
@@ -31,56 +31,56 @@
     </nav>
     <div class="card-body messages-box">
       <ul class="list-unstyled messages-list">
-        {% comment %} <li class="message received">
-          <div class="message-text">
-            <div class="message-sender">
+        <li class="mb-3">
+          <div class="d-inline-block">
+            <span class="d-flex flex-column p-3 received rounded">
               <b>AI Chatbot</b>
-            </div>
-            <div class="message-content">
-              Hi {{ user.username }}, I am your AI Chatbot, you can ask me anything.
-            </div>
+              <span class="message-content">
+                Hi {{ user.username }}, I am your AI Chatbot, you can ask me anything.
+              </span>
+            </span>
           </div>
-        </li> {% endcomment %}
+        </li>
         {% for chat in chats %}
           {% if chat.user == request.user %}
-            <li class="message sent">
-              <div class="message-text">
-                <div class="message-sender">
-                  <b>You</b>
-                </div>
-                <div class="message-content">
-                  {{ chat.message }}
+            <li class="mb-3">
+              <div class="d-flex justify-content-end">
+                <div class="d-inline-block">
+                  <div class="p-3 sent rounded">
+                    <b>You</b>
+                    <div class="message-content">
+                      {{ chat.message }}
+                    </div>
+                  </div>
                 </div>
               </div>
             </li>
-            <li class="message received">
-              <div class="message-text">
-                <div class="message-sender">
+            <li class="mb-3">
+              <div class="d-inline-block">
+                <div class="p-3 received rounded">
                   <b>AI Chatbot</b>
-                </div>
-                <div class="message-content">
-                  {{ chat.response }}
+                  <div class="message-content">
+                    {{ chat.response }}
+                  </div>
                 </div>
               </div>
             </li>
           {% endif %}
         {% endfor %}
-        
       </ul>
     </div>
-    <br><br>
-    <br><br>
-    <br><br>
   </div>
-  <form class="message-form">
-    {% csrf_token %}
-    <div class="input-group">
-      <input type="text" class="form-control message-input" placeholder="Type your message...">
-      <div class="input-group-append">
+  <div class="m-2">
+    <form class="message-form row g-3">
+      {% csrf_token %}
+      <div class="col-10">
+        <input type="text" class="form-control message-input" placeholder="Type your message...">
+      </div>
+      <div class="col-2">
         <button type="submit" class="btn btn-primary btn-send">Send</button>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>
 
 <script src="{% static 'js/script.js' %}"></script>
