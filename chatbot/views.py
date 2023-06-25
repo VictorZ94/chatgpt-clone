@@ -4,16 +4,15 @@ from django.contrib.auth.models import User
 from django.contrib import auth
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.conf import settings
 
 # @Packages
 import openai
-from dotenv import dotenv_values
 
 # @Scripts
 from .models import Chat
 
-config = dotenv_values(".env")
-openai.api_key = config.get('OPENAI_API_KEY')
+openai.api_key = settings.OPENAI_API_KEY
 
 def ask_openai(message):
   response = openai.Completion.create(
